@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -11,6 +13,7 @@ using PoolStudio.WEB.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace PoolStudio.WEB
@@ -41,8 +44,23 @@ namespace PoolStudio.WEB
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
+                //app.UseExceptionHandler(options =>
+                //{
+                //    options.Run(async context =>
+                //    {
+                //        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                //        context.Response.ContentType = "text/html";
+                //        var ex = context.Features.Get<IExceptionHandlerFeature>();
+                //        if (ex != null)
+                //        {
+                //            var error = $"<h1>Error: {ex.Error.Message}</h1>{ex.Error.StackTrace }";
+                //            await context.Response.WriteAsync(error).ConfigureAwait(false);
+                //        }
+                //    });
+                //});
+                app.UseExceptionHandler("/Home/Error");
             }
             else
             {
@@ -50,14 +68,17 @@ namespace PoolStudio.WEB
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //app.UseStatusCodePages("text/plain", "Pagina de codigos de estado, codigo de estado: {0}"); ;
+
+            //app.UseStatusCodePagesWithRedirects("/Usuarios/Metodo?code={0}");
+            app.UseStatusCodePagesWithReExecute("/Home/Error", "?code={0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PoolStudio.WEB.Models;
 using System;
@@ -20,6 +21,7 @@ namespace PoolStudio.WEB.Controllers
 
         public IActionResult Index()
         {
+            //throw new Exception("This is some exception!!!");
             return View();
         }
 
@@ -29,9 +31,31 @@ namespace PoolStudio.WEB.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int? statusCode = null)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ErrorViewModel error = null;
+            if (statusCode != null)
+            {
+                error = new ErrorViewModel
+                {
+                    RequestId = Convert.ToString(statusCode),
+                    ErrorMessage = "Se produjo un error al procesar su solicitud",
+                };
+            }
+            else
+            {
+                var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+                if (exceptionFeature != null)
+                {
+                    error = new ErrorViewModel
+                    {
+                        RequestId = "500",
+                        ErrorMessage = exceptionFeature.Error.Message,
+                    };
+                }
+            }
+            return View(error);
+            //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

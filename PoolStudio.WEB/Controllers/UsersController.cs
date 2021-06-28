@@ -29,5 +29,11 @@ namespace PoolStudio.WEB.Controllers
             ViewData["id"] = id;
             return View();
         }
+
+        public IActionResult Metodo(int code)
+        {
+            var data = $"Codigo de estado {code}";
+            return View("Index", data);
+        }
     }
 }
