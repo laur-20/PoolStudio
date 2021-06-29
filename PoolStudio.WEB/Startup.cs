@@ -84,6 +84,8 @@ namespace PoolStudio.WEB
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute("Usuarios","Usuario", "{controller=Usuario}/{action=Usuario}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

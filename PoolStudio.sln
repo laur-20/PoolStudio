@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoolStudio", "PoolStudio\PoolStudio.csproj", "{4BC4AF16-1881-49CF-A1E6-11E92BA4913D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoolStudio", "PoolStudio\PoolStudio.csproj", "{4BC4AF16-1881-49CF-A1E6-11E92BA4913D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoolStudio.WEB", "PoolStudio.WEB\PoolStudio.WEB.csproj", "{D61AA111-4AFA-4ACE-9113-062AB88A5AF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoolStudio.WEB", "PoolStudio.WEB\PoolStudio.WEB.csproj", "{D61AA111-4AFA-4ACE-9113-062AB88A5AF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

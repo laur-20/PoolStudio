@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -36,8 +40,6 @@
     * Author: BootstrapMade.com
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
-
-
     <!-- Freelancer Template Archives -->
 
     <meta charset="utf-8" />
@@ -68,6 +70,7 @@
             </div>
 
             <nav class="nav-menu d-none d-lg-block">
+                
                 <ul>
                     <li class="active"><a href="https://localhost:44351">Inicio</a></li>
 
@@ -87,8 +90,18 @@
                         </ul>
                     </li>
                     <li><a href="https://localhost:44351/Home/Privacy">Videos</a></li>
+                    @*<partial name="_LoginPartial" />*@
+                    <li class="drop-down">
+                        <a href="">Mi Cuenta</a>
+                        <ul>
+                            <li><a href="https://localhost:44351/Identity/Account/Login">Acceder</a></li>
+                            <li><a href="https://localhost:44351/Usuario/Register">Registrarse</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Usuario" asp-controller="Usuario" asp-action="Usuario">Usuarios</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-               
             </nav><!-- .nav-menu -->
         </div>
     </header><!-- End Header -->
