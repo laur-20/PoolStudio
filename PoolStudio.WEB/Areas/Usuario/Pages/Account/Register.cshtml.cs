@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,7 +11,11 @@ namespace PoolStudio.WEB.Areas.Usuario.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-       
+        private UserManager<IdentityUser> _userManager;
+        public RegisterModel(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
         public void OnGet()
         {
            
@@ -36,22 +41,42 @@ namespace PoolStudio.WEB.Areas.Usuario.Pages.Account
             [Compare("Password", ErrorMessage = "La confirmación de la contraseña no coincide con la contraseña.")]
             public string ConfirmPassword { get; set; }
 
-
             [Required]
             public string ErrorMessage { get; set; }
+
         }
-        public IActionResult OnPost() 
+        public async Task<IActionResult> OnPostAsync() 
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                 
+                var userList = _userManager.Users.Where(u => u.Email.Equals(Input.Email)).ToList();
+                if (userList.Count.Equals(0))
+                {
+                    var user = new IdentityUser
+                    {
+                        UserName = Input.Email,
+                        Email = Input.Email
+                    };
+                    var result = await _userManager.CreateAsync(user, Input.Password);
+                    if (result.Succeeded)
+                    {
+                        return Page();
+                    }
+                    else
+                    {
+                        foreach (var item in result.Errors)
+                        {
+                            Input = new InputModel
+                            {
+                                ErrorMessage = item.Description,
+                            };
+                        }
+                        return Page();
+                    }
+                }               
             }
-            else
-            {
-                ModelState.AddModelError("Input.Email", "Se ha generado un error en el servidor.");
-            }
-            var data = Input;
+            
             return Page();
-        } 
+        }
     }
 }
