@@ -73,9 +73,8 @@ namespace PoolStudio.WEB.Areas.Usuario.Pages.Account
                         }
                         return Page();
                     }
-                }               
+                }
             }
-            
             return Page();
         }
     }
