@@ -45,6 +45,7 @@ namespace PoolStudio.WEB.Areas.Usuario.Pages.Account
             public string ErrorMessage { get; set; }
 
         }
+
         public async Task<IActionResult> OnPostAsync() 
         {
             if (ModelState.IsValid)
